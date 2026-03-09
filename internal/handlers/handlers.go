@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 	
 	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
@@ -26,7 +27,7 @@ func UploadHandlers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// получение файла
-	file, header, err := r.FormFile("file")
+	file, header, err := r.FormFile("myfile")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -52,12 +53,10 @@ func UploadHandlers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filepath.Ext(header.Filename)
+	ext := filepath.Ext(header.Filename)
 
-	// название файла пришлось убрать, так как в IDE возникает ошибка
-	
-
-	newFile, err := os.CreateTemp("", "*.txt")
+	fileName := time.Now().UTC().String() + ext
+	newFile, err := os.Create(fileName)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

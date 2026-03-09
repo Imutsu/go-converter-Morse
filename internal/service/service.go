@@ -19,7 +19,7 @@ func AutoDetect(input string) (string, error) {
 	isMorse := true
 
 	for _, r:= range input {
-		if r != '.' && r != '-' && r != ' ' {
+		if r != '.' && r != '-' && r != ' ' && r != '/' {
 			isMorse = false
 			break
 		}
